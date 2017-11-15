@@ -12,11 +12,11 @@ class Flatten(nn.Module):
 cnn = nn.Sequential(
     nn.Conv2d(1, 6, 3, padding=1),
     nn.ReLU(),
-    nn.BatchNorm2d(6),
+    #nn.BatchNorm2d(6),
     nn.MaxPool2d(2, 2),
     nn.Conv2d(6, 16, 3),
     nn.ReLU(),
-    nn.BatchNorm2d(16),
+    #nn.BatchNorm2d(16),
     nn.MaxPool2d(2, 2),
     Flatten(),
     nn.Linear(576, 150),
@@ -77,8 +77,8 @@ dtype = torch.cuda.FloatTensor
 #
 # cnn.type(dtype)
 # loss_fn = nn.CrossEntropyLoss().type(dtype)
-# optimizer = torch.optim.RMSprop(cnn.parameters())
-# train(cnn, loss_fn, optimizer, train_img, train_labels, dtype, 2)
+# optimizer = torch.optim.RMSprop(cnn.parameters(), lr=0.001)
+# train(cnn, loss_fn, optimizer, train_img, train_labels, dtype, 12)
 # y_pred = predict(cnn, test_img, dtype)
 # accuracy = np.mean(y_pred.reshape(-1) == test_labels)
 # print('Test accuracy %f' %(accuracy))
@@ -86,8 +86,8 @@ dtype = torch.cuda.FloatTensor
 test_data = load_test_set('./data/test.csv')
 cnn.type(dtype)
 loss_fn = nn.CrossEntropyLoss().type(dtype)
-optimizer = torch.optim.RMSprop(cnn.parameters())
-train(cnn, loss_fn, optimizer, data, labels, dtype, 4)
+optimizer = torch.optim.RMSprop(cnn.parameters(), lr=0.001)
+train(cnn, loss_fn, optimizer, data, labels, dtype, 12)
 y_pred = predict(cnn, test_data, dtype)
 save_results('./data/results.csv', y_pred)
 
